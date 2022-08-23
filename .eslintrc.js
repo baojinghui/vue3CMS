@@ -16,5 +16,9 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    //关闭组件必须是多名字的提示
+    'vue/multi-word-component-names': 'off',
+    //关闭模板没有根组件的的提示
+    'tvue/valid-template-root': 'off',
   },
 }
