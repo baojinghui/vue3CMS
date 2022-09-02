@@ -13,8 +13,10 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.9",
     "axios": "^0.27.2",
+    "coderwhy": "^1.1.4",
     "core-js": "^3.8.3",
-    "element-plus": "^2.2.14",
+    "element-plus": "^2.2.15",
+    "normalize.css": "^8.0.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
