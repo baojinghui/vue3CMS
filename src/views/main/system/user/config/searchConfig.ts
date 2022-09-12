@@ -4,34 +4,51 @@ export const formConfig: MyFormType = {
   //配置表单
   formItems: [
     {
+      filse: 'id',
+      type: 'input',
+      label: 'ID',
+      rules: [],
+      placeholder: '请输入ID'
+    },
+    {
+      filse: 'name',
       type: 'input',
       label: '用户名',
       rules: [],
       placeholder: '请输入用户名'
     },
     {
-      type: 'password',
-      label: '密码',
+      filse: 'realname',
+      type: 'input',
+      label: '真实姓名',
       rules: [],
-      placeholder: '请输入密码'
+      placeholder: '请输入真实姓名'
     },
     {
-      type: 'select',
-      label: '喜欢的运动',
+      filse: 'cellphone',
+      type: 'input',
+      label: '手机号',
       rules: [],
-      placeholder: '请选择运动',
+      placeholder: '请输入手机号'
+    },
+    {
+      filse: 'enable',
+      type: 'select',
+      label: '是否可用',
+      placeholder: '请选择用户状态',
       options: [
         {
-          title: '篮球',
-          value: 'basketball'
+          title: '启用',
+          value: '1'
         },
         {
-          title: '足球',
-          value: 'football'
+          title: '禁用',
+          value: '0'
         }
       ]
     },
     {
+      filse: 'createAt',
       type: 'datepicker',
       label: '创建时间',
       rules: [],

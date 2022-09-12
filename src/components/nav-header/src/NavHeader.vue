@@ -38,9 +38,9 @@ const foldMenu = () => {
   isfold.value = !isfold.value
   emit('controlMenu', isfold.value)
 }
-//根据当前页面的路径匹配返回的菜单，得到菜单的名字，映射为面包屑
 
-//面包屑的数据
+//根据当前页面的路径匹配返回的菜单，得到菜单的名字，映射为面包屑
+//面包屑的数据,通过computed设置为响应式，
 const breadcrumbs = computed(() => {
   const path = route.path
   const menus = store.state.login.userMenus

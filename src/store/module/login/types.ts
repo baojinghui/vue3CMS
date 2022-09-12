@@ -1,6 +1,7 @@
 //login仓库的state类型接口
-export interface LoginState {
+export interface LoginStateType {
   token: string
   userInfo: any
   userMenus: any
+  permissions: string[]
 }

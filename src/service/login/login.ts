@@ -1,5 +1,6 @@
 import myAxios from '@/service'
-import { AccountInfo, ResultBackType, AccountLoginDataType } from './type'
+import { AccountInfo, AccountLoginDataType } from './type'
+import { ResultBackType } from '../types'
 //枚举登录页所有的接口
 enum LoginAPI {
   //实现登录获取id和token

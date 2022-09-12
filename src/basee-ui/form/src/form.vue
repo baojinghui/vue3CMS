@@ -1,34 +1,47 @@
 <!-- 表单和el-input的配置文件 -->
 <template>
   <div class="my-form">
+    <div class="header">
+      <slot name="header"> </slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
-            <el-form-item :label="item.label" :style="itemStyle">
+            <el-form-item
+              :label="item.label"
+              :style="itemStyle"
+              v-if="!item.isHidden"
+            >
               <!-- 如果为表单是 -->
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
                 <el-input
+                  v-model="formData[item.filse]"
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
                 ></el-input>
               </template>
               <!-- 如果为下拉菜单时 -->
               <template v-else-if="item.type === 'select'">
-                <el-select :placeholder="item.placeholder" style="width: 100%">
+                <el-select
+                  :placeholder="item.placeholder"
+                  style="width: 100%"
+                  v-model="formData[item.filse]"
+                >
                   <el-option
                     v-for="option in item.options"
                     :value="option.value"
                     :key="option.value"
-                    >{{ option.title }}</el-option
-                  >
+                    :label="option.title"
+                  />
                 </el-select>
               </template>
               <!-- 如果为日期表单时 -->
               <template v-else-if="item.type === 'datepicker'">
                 <el-date-picker
+                  v-model="formData[item.filse]"
                   style="width: 100%"
                   v-bind="item.otherOption"
                 ></el-date-picker>
@@ -38,13 +51,20 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { MyFormItem } from '../types'
-import { PropType } from 'vue'
-defineProps({
+import { PropType, ref, watch } from 'vue'
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => ({})
+  },
   formItems: {
     type: Array as PropType<MyFormItem[]>,
     default: () => []
@@ -70,17 +90,17 @@ defineProps({
     })
   }
 })
+
+const emit = defineEmits(['update:modelValue'])
+//这里要让数据成为单向流时需要触发事件并返回，但是当数据为复杂刷剧类型时，
+//computed的set不能调用emit事件，返回新的数据，而是直接修改的数据的引用，相当于修改props，
+//解决方案，进行一次拷贝，返回新的值
+const formData = ref({ ...props.modelValue })
+watch(formData, (newVal) => emit('update:modelValue', newVal), { deep: true })
 </script>
 
-<!--
-  这是一个封装过的el-form的表单
-  传入:labelWidth:可以设置labeel的统一距离
-  传入一个:formItems的配置对像可以生成表单
-  itemStyle:设置表单的样式
-
--->
 <style lang="less" scoped>
 .my-form {
-  padding-top: 22px;
+  padding-top: 15px;
 }
 </style>

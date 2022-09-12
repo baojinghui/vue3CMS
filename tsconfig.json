@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     //目标代码(ts->js(es5/6/7)
     "target": "esnext",
     //目标代码需要使用的模块化方案(commonjs），但是脚手架的bable会自动转化按
@@ -35,6 +36,7 @@
   //哪些代码需要解析
   "include": [
     "src/**/*.ts",
+    "src/*.vue",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",

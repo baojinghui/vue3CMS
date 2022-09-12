@@ -1,30 +1,32 @@
 //Module<S, R>需要传入两个类型，第一个是state的类型
 import { Module } from 'vuex'
 //导入当前模块state的类型
-import { LoginState } from './types'
+import { LoginStateType } from './types'
 // 导入根仓库state的类型
-import { RootState } from '@/store/types'
+import { RootStatetype } from '@/store/types'
 //导入请求及请求参数对应的类型
 import {
   accountLoginRequest,
   requestUserById,
   requestUserMenusByRoleId
 } from '@/service/login/login'
+
 import { AccountInfo } from '@/service/login/type'
 //导入本地存储
 import cache from '@/utils/cache'
 //导入仓库
 import router from '@/router'
 //导入方法将服务器返回的菜单meuns->rouens
-import { mapMenusToRoutes } from '@/utils/map-menus'
-const loginModule: Module<LoginState, RootState> = {
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
+const loginModule: Module<LoginStateType, RootStatetype> = {
   //开启命名空间
   namespaced: true,
   state() {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: [] //登陆者用户可以拿到的所有权限
     }
   },
   actions: {
@@ -36,6 +38,10 @@ const loginModule: Module<LoginState, RootState> = {
       //把token保存到仓库，并本地存储
       commit('ChangeToken', token)
       cache.setStrCache('token', token)
+
+      //拿到根仓库中action的方法，获取全部的角色和部门数据
+      // dispatch('gitInitialDataAction', null, { root: true })
+
       //获取用户信息并保存(根据id和token)
       const userInfoResult = await requestUserById(id)
       const userInfo = userInfoResult.data
@@ -92,6 +98,10 @@ const loginModule: Module<LoginState, RootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      //获取用户按钮的权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   getters: {}

@@ -9,6 +9,7 @@ import registerApp from './global/index'
 import 'normalize.css'
 //导入自定义的初始化样式
 import './assets/css/index.less'
+//本地存储
 import cache from './utils/cache'
 const app = createApp(App)
 app.use(store)
@@ -16,8 +17,8 @@ app.use(store)
 if (cache.getStrCache('token')) {
   setupStore()
 }
-app.use(router)
 
+app.use(router)
 //全局注册的插件
 app.use(registerApp)
 app.mount('#app')

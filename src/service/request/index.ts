@@ -70,7 +70,7 @@ class MyAxios {
 
   //封装request请求
   //请求参数config要用自己扩展后的接口(MyRequestConfig)，才支持传入对象形式的拦截器
-  request<T>(config: MyRequestConfig<T>): Promise<T> {
+  request<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return new Promise((resolve, resject) => {
       //还可以给单个请求配置拦截器
       if (config.interceptors?.resquestInterceptors) {
@@ -102,20 +102,20 @@ class MyAxios {
     })
   }
   //封装get请求,就是再get内部调request
-  get<T>(config: MyRequestConfig<T>): Promise<T> {
+  get<T = any>(config: MyRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
   //封装post请求,就是再post内部调request
-  post<T>(config: MyRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'GET' })
+  post<T = any>(config: MyRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
   }
   //封装delete请求,就是再delete内部调request
-  delete<T>(config: MyRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'GET' })
+  delete<T = any>(config: MyRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
   }
   //封装patch请求,就是再patch内部调request
-  patch<T>(config: MyRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'GET' })
+  patch<T = any>(config: MyRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 export default MyAxios

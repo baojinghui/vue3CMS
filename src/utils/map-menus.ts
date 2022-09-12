@@ -67,8 +67,6 @@ export const mapMenusPath = (
     }
   }
 }
-//导出菜单的第一个item，用于进入页面的初始化
-export { firstMenu }
 
 //根据routes路径匹配当前的菜单，获取当前菜单信息，映射到面包屑
 export const pathMapBreadcrumb = (menus: any, path: string) => {
@@ -76,3 +74,41 @@ export const pathMapBreadcrumb = (menus: any, path: string) => {
   mapMenusPath(menus, path, breadcrumb)
   return breadcrumb
 }
+
+//获取用户登录后返回的所有权限按钮
+export const mapMenusToPermissions = (userMenus: any[]) => {
+  const permissions: string[] = []
+  const _recuresePermissions = (userMenus: any[]) => {
+    for (const menu of userMenus) {
+      if (menu.type == 1 || menu.type == 2) {
+        _recuresePermissions(menu.children ?? [])
+      } else if (menu.type == 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  _recuresePermissions(userMenus)
+  return permissions
+}
+
+//根据当前的树结构找到当前树结构的全部叶子节点的id
+export const getMenuLeafKeys = (menuList: any[]) => {
+  //所有叶子节点的id
+  const leafKeys: number[] = []
+  //递归寻找叶子的函数
+  const _recurseGetLeaf = (menuList: any) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children)
+      } else {
+        leafKeys.push(menu.id)
+      }
+    }
+  }
+  _recurseGetLeaf(menuList)
+
+  return leafKeys
+}
+
+//导出菜单的第一个item，用于进入页面的初始化
+export { firstMenu }

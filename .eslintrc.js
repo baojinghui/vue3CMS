@@ -22,7 +22,9 @@ module.exports = {
     'vue/valid-template-root': 'off',
     //关闭any警告
     '@typescript-eslint/no-explicit-any': 'off',
-    //关闭请求头.属性的警告
-    'no-undef': 'off'
+    //关闭headers.属性 的警告
+    'no-undef': 'off',
+    //
+    'vue/no-mutating-props': 'off'
   }
 }
